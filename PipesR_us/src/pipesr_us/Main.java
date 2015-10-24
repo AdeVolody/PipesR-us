@@ -9,7 +9,7 @@ package pipesr_us;
  *
  * @author Adecrown
  */
-public class PipesR_us {
+public class Main {
 
     /**
      * @param args the command line arguments
