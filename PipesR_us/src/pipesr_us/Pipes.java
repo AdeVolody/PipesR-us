@@ -38,10 +38,8 @@ public abstract class Pipes {
     abstract protected int pipeType();
 
     /**
-     * This method Works out the overall cost of the Pipe. Cost of pipe *
-     * quantity.
-     *
-     * @return convert - total cost of pipes, formatted to two decimal places.
+     * This method Works out the overall cost of the Pipe. 
+     * Cost of pipe * quantity = formatted to two decimal places.
      */
     protected double totalCost() {
         double finalCost = pipeCost() * getQuantity();
@@ -49,11 +47,8 @@ public abstract class Pipes {
         return convert;
     }
 
-    /**
-     * This Works out the volume  of Pipe.
-     *
-     * @return pipeVolume - Pipes Volume.
-     */
+    
+     //This Works out the volume  of Pipe.
     private double volume() {
 
         double pipeVolume = 0.0;
@@ -61,12 +56,8 @@ public abstract class Pipes {
         return pipeVolume;
     }
 
-    /**
-     * Work out cost % for the specified grade. Cost of 1 cubic inch of plastic
-     * by grade.
-     *
-     * @return cost - grade cost.
-     */
+    
+    //Work out cost % for the specified grade. Cost of 1 cubic inch of plastic by grade
     private double gradeCost(int grade) {
         double cost = 0.0;
         switch (grade) {

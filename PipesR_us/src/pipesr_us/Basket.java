@@ -16,15 +16,13 @@ public class Basket {
     private final String name; // basket name
     protected ArrayList<Orders> orders = new ArrayList<>(); // Array of Orders.
 
+    
+    // First Consctructor 
     public Basket() {
         this.name = "PipesR-Us";
     }
 
-    /**
-     * Constructor.
-     *
-     * @param name - (String) - basket name.
-     */
+    //Second Constructor 
     public Basket(String name) {
         
         this.name = name;
@@ -36,9 +34,8 @@ public class Basket {
         
     }
 
-    /**
-     * Outputs information regarding each order stored in the basket.
-     */
+    
+    //Outputs information regarding each order stored in the basket.
     public void ordersPlaced() {
         
     }
@@ -48,7 +45,7 @@ public class Basket {
     public String getName() {
         
         return null;
-    } // Returns Store name.
+    } 
 
     
     // Returns amount of Orders.
