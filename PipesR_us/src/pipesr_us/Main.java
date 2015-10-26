@@ -7,7 +7,7 @@ package pipesr_us;
 
 /**
  *
- * @author Adecrown
+ * @author up720163
  */
 public class Main {
 
@@ -16,6 +16,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Pipes pier = new Type_5(1,1,3,1,true);
+        
+        System.out.println(pier.totalCost());
     }
     
 }
