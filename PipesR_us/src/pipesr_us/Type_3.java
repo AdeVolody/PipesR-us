@@ -16,14 +16,22 @@ public class Type_3 extends Pipes{
     
     public Type_3(int grade, int quantity, double lenght,double outDiam, boolean chmRes) {
         super(grade, quantity, lenght, outDiam, chmRes);
-        this.additionalCost = 1.00;
+        
+        
+        extraCost();
+    }
+    
+    
+    public void extraCost()
+    {
+        additionalCost = 1.00;
         
         if (this.chmRes) {
-            this.additionalCost += 0.12;
+           additionalCost += 0.12;
         } 
-        
-        // this type only accept two colours
-        this.additionalCost += 0.17; 
+         
+        // this type only accept two colour
+        additionalCost += 0.17; 
     }
 
     

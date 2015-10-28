@@ -16,23 +16,30 @@ public class Type_5 extends Pipes{
     
     public Type_5(int grade, int quantity, double lenght,double outDiam, boolean chmRes) {
         super(grade, quantity, lenght, outDiam, chmRes);
-        this.additionalCost = 1.00;
-        
-        if (this.chmRes) {
-            this.additionalCost += 0.12;
-        } 
-        
-        // this type only accept two colour
-        this.additionalCost += 0.12; 
-        
-        // this type allows Inner insulation
-        this.additionalCost += 0.14; 
-        
-        // this type allows Outer reinforcement
-        this.additionalCost += 0.15; 
+        extraCost();
     }
 
-    
+     public void extraCost()
+    {
+        additionalCost = 1.00;
+        
+        if (this.chmRes) {
+           additionalCost += 0.12;
+        } 
+         
+        // this type only accept two colour
+        additionalCost += 0.17; 
+        
+         // this type allows Inner insulation
+        additionalCost += 0.14; 
+        
+        
+         // this type allows Outer reinforcement
+        additionalCost += 0.15; 
+    }
+     
+     
+     
     // return the cost of the pipe
     @Override
     protected double pipeCost() {

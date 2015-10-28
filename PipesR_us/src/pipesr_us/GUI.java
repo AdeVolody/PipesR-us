@@ -5,17 +5,35 @@
  */
 package pipesr_us;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author up720163
  */
 public class GUI extends javax.swing.JFrame {
 
+    private String alerts;
+    private int grade, quantity, colours;
+    private double lenght, outDiam;
+    private boolean error, chmRes, insulation, reinforcement;
+    private Basket basket;
+
     /**
      * Creates new form GUI
      */
     public GUI() {
+
         initComponents();
+        alerts = "Good";
+        error = false;
+        validator();
+
+        // creates basket.
+        basket = new Basket("Basket");
+
+        // Add an Order to basket.
+        basket.addOrder(new Orders());
     }
 
     /**
@@ -32,7 +50,7 @@ public class GUI extends javax.swing.JFrame {
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        LenghtSpinner = new javax.swing.JSpinner();
+        lenghtSpinner = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         OuterSpinner = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
@@ -48,7 +66,7 @@ public class GUI extends javax.swing.JFrame {
         outMetRein = new javax.swing.JCheckBox();
         chResis = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        alertsLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         order = new javax.swing.JButton();
@@ -71,24 +89,62 @@ public class GUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setText("Lenght:");
 
+        lenghtSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
+        lenghtSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                lenghtSpinnerStateChanged(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel2.setText("Outer Diameter:");
+
+        OuterSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+        OuterSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                OuterSpinnerStateChanged(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel3.setText("Quantity:");
 
+        QuantSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        QuantSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                QuantSpinnerStateChanged(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel4.setText("Grade:");
+
+        GradeSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
+        GradeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                GradeSpinnerStateChanged(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 13)); // NOI18N
         jLabel5.setText("Colour 1:");
 
-        CrComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CrComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Colour", "Green", "Blue", "Yellow", "Red", "Orange", "Black", "Purple" }));
+        CrComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 13)); // NOI18N
         jLabel6.setText("Colour 2:");
 
-        CrComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CrComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Colour", "Green", "Blue", "Yellow", "Red", "Orange", "Black", "Purple" }));
+        CrComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -100,7 +156,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LenghtSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lenghtSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -120,7 +176,7 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CrComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(CrComboBox2, 0, 1, Short.MAX_VALUE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -133,7 +189,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(LenghtSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lenghtSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -164,6 +220,11 @@ public class GUI extends javax.swing.JFrame {
 
         inInLayer.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         inInLayer.setText("Inner Insulation Layer");
+        inInLayer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                inInLayerItemStateChanged(evt);
+            }
+        });
         inInLayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inInLayerActionPerformed(evt);
@@ -172,9 +233,19 @@ public class GUI extends javax.swing.JFrame {
 
         outMetRein.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         outMetRein.setText("Outer Metallic Reinforcement");
+        outMetRein.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                outMetReinItemStateChanged(evt);
+            }
+        });
 
         chResis.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         chResis.setText("Chemical Resistance");
+        chResis.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chResisItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -205,7 +276,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel7.setText("Alerts:");
 
-        jLabel8.setText("Fill in the above Box");
+        alertsLabel.setText("Fill in the above Box");
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel9.setText("Total Cost:");
@@ -214,6 +285,11 @@ public class GUI extends javax.swing.JFrame {
 
         order.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         order.setText("GET QUOTES");
+        order.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderActionPerformed(evt);
+            }
+        });
 
         reset.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         reset.setText("RESET");
@@ -233,7 +309,7 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel8))
+                                .addComponent(alertsLabel))
                             .addComponent(reset))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -253,7 +329,7 @@ public class GUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8)
+                    .addComponent(alertsLabel)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
@@ -373,6 +449,255 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inInLayerActionPerformed
 
+    private void lenghtSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lenghtSpinnerStateChanged
+        // TODO add your handling code here:
+        try {
+            lenght = (Integer) GradeSpinner.getValue(); // Store the grade.
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+
+        validator();
+    }//GEN-LAST:event_lenghtSpinnerStateChanged
+
+    private void GradeSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_GradeSpinnerStateChanged
+        // TODO add your handling code here:
+        try {
+            grade = (Integer) GradeSpinner.getValue(); // Store the grade.
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+
+        validator();
+
+    }//GEN-LAST:event_GradeSpinnerStateChanged
+
+    private void OuterSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OuterSpinnerStateChanged
+        // TODO add your handling code here:
+        try {
+            outDiam = (Integer) OuterSpinner.getValue(); // Store the grade.
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+
+        validator();
+    }//GEN-LAST:event_OuterSpinnerStateChanged
+
+    private void QuantSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_QuantSpinnerStateChanged
+        // TODO add your handling code here:
+        try {
+            quantity = (Integer) QuantSpinner.getValue(); // Store the grade.
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+
+        validator();
+    }//GEN-LAST:event_QuantSpinnerStateChanged
+
+    private void CrComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrComboBox1ActionPerformed
+        // TODO add your handling code here:
+        if (CrComboBox1.getSelectedIndex() != 0) {
+            // If colours are zero, increase to one.
+            if (this.colours == 0) {
+                this.colours++;
+            }
+        } else {
+            this.colours = 0; // Set the colours to zero.
+        }
+
+        validator();
+
+        System.out.println("TYpe 1: " + colours);
+    }//GEN-LAST:event_CrComboBox1ActionPerformed
+
+    private void CrComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrComboBox2ActionPerformed
+        // TODO add your handling code here:
+        if (CrComboBox2.getSelectedIndex() != 0) {
+            // If colours are one, increase to two.
+            if (this.colours == 1) {
+                this.colours++;
+            }
+        } else {
+            // If colours are two, decrease to one.
+            if (this.colours == 2) {
+                this.colours = 1;
+            }
+        }
+
+        validator();
+
+        System.out.println("TYpe 2: " + colours);
+
+    }//GEN-LAST:event_CrComboBox2ActionPerformed
+
+    private void inInLayerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_inInLayerItemStateChanged
+        // TODO add your handling code here:
+        if (inInLayer.isSelected()) {
+            insulation = true;
+        } else {
+            insulation = false;
+        }
+
+        validator();
+
+    }//GEN-LAST:event_inInLayerItemStateChanged
+
+    private void outMetReinItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_outMetReinItemStateChanged
+        // TODO add your handling code here:
+
+        if (outMetRein.isSelected()) {
+            reinforcement = true;
+        } else {
+            reinforcement = false;
+        }
+
+        validator();
+    }//GEN-LAST:event_outMetReinItemStateChanged
+
+    private void chResisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chResisItemStateChanged
+        // TODO add your handling code here:
+        if (chResis.isSelected()) {
+            chmRes = true;
+        } else {
+            chmRes = false;
+        }
+
+        validator();
+    }//GEN-LAST:event_chResisItemStateChanged
+
+    private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
+        // TODO add your handling code here:
+        if(error == false)
+        {
+            createPipesType();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,alerts);
+        }
+    }//GEN-LAST:event_orderActionPerformed
+
+    public void validator() {
+
+        if (grade < 2) {
+            colours = 0;
+            CrComboBox1.setEnabled(false);
+            CrComboBox2.setEnabled(false);
+            inInLayer.setEnabled(false);
+            outMetRein.setEnabled(false);
+        } else if (grade >= 2) {
+            // If grade is more than or equal to 2.
+            // Colours.
+            CrComboBox1.setEnabled(true); // Enable Colour 1.
+            if (CrComboBox1.getSelectedIndex() != 0) {
+                // If a colour for Colour 1 HAS been selected.
+                CrComboBox2.setEnabled(true); // Enable Colour 2.
+                if (CrComboBox2.getSelectedIndex() != 0) {
+                    // If a colour for Colour 2 HAS been selected.
+                    this.colours = 2;
+                } else {
+                    // If a colour for Colour 2 HASN'T been selected.
+                    this.colours = 1;
+                }
+            } else {
+                // If a colour for Colour 1 HASN'T been selected.
+                CrComboBox2.setEnabled(false); // Disable Colour 2.
+            }
+
+            // Reinforced Bottoms.
+            if (grade >= 2 && this.colours == 2) {
+                // If grade is more than or equal to 2 AND has 2 colours.
+                inInLayer.setEnabled(true); // Enable Re-inforced Bottoms.
+
+            } else if (grade < 2 || this.colours != 2) {
+                // If grade is less than 2 OR if it doesn't have 2 colours.
+                inInLayer.setEnabled(false); // Disable Re-inforced Bottoms.
+
+            }
+
+            // Reinforced Corners.
+            if (grade >= 3 && this.colours == 2 && insulation == true) {
+                // If grade is more than or equal to 3 AND has 2 colours.
+                // AND Re-inforced Bottoms are selected.
+                outMetRein.setEnabled(true);
+
+            } else if (grade < 3 || this.colours != 2 || insulation == false) {
+                // If grade is less than 3 OR if it doesn't have 2 colours.
+                // OR if Re-inforced Bottoms are not selected.
+                outMetRein.setEnabled(false); // Disable Re-inforced Corners.
+
+            }
+        }
+
+        // Validation IF Statements.
+        if (grade >= 4 && this.colours == 0) {
+
+            alerts = "Please choose grade 1-3, or select a colour.";
+            error = true;
+        } else if ((grade == 5 || grade == 1) && this.colours == 1) {
+            // If user chose ONE colour, but grade is 1 or 5.
+            alerts = "Please choose grade 2-4, or select second colour.";
+            error = true;
+        } else if (grade < 2 && (this.colours == 1 || this.colours == 2)) {
+            // If user chose colours, but grade is 1.
+            alerts = "Please choose a grade between 2-5.";
+            error = true;
+        } else if (grade >= 2 && this.colours < 2 && (insulation == true
+                || reinforcement == true)) {
+            // If user chose insulation options, but hasn't chosen 2 colours.
+            if (jTabbedPane2.getSelectedIndex() != 0) {
+                // If main options tab isn't selected, select it.
+                jTabbedPane2.setSelectedIndex(0);
+            }
+            alerts = "Please select two colours (in order to have"
+                    + " Re-inforced Bottoms/Corners).";
+            error = true;
+        } else {
+            // If validation is okay.
+            alerts = "Good";
+            error = false;
+        }
+        alertsLabel.setText(alerts); // Update the status message.
+
+       
+
+    }
+
+    public void createPipesType() {
+        Pipes pipes = null;
+        if (grade >= 1 & grade <= 3 & colours == 0 & insulation == false & reinforcement == false) {
+            pipes = pipes = new Type_1(grade, quantity, lenght, outDiam, chmRes);
+            error = false; // No errors
+            System.out.println(pipes.totalCost());
+        } else if (grade >= 2 & grade <= 4 & colours == 1 & insulation == false & reinforcement == false) {
+            pipes = pipes = new Type_2(grade, quantity, lenght, outDiam, chmRes);
+            error = false; // No errors
+        } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == false & reinforcement == false) {
+            pipes = pipes = new Type_3(grade, quantity, lenght, outDiam, chmRes);
+            error = false; // No errors
+        } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == true & reinforcement == false) {
+            pipes = pipes = new Type_4(grade, quantity, lenght, outDiam, chmRes);
+            error = false; // No errors
+        } else if (grade >= 3 & grade <= 5 & colours == 2 & insulation == true & reinforcement == true) {
+            pipes = pipes = new Type_5(grade, quantity, lenght, outDiam, chmRes);
+            error = false; // No errors
+        } else {
+            error = true;
+            alerts = "Order not accepted";
+        }
+
+        if (error = false) {
+            // If there were no errors, add pipes to the order.
+            basket.orders.get(basket.amount() - 1).addPipe(pipes);
+
+        }
+       
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -404,6 +729,7 @@ public class GUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GUI().setVisible(true);
+
             }
         });
     }
@@ -412,10 +738,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JComboBox CrComboBox1;
     private javax.swing.JComboBox CrComboBox2;
     private javax.swing.JSpinner GradeSpinner;
-    private javax.swing.JSpinner LenghtSpinner;
     private javax.swing.JSpinner OuterSpinner;
     private javax.swing.JSpinner QuantSpinner;
     private javax.swing.JButton addPipe;
+    private javax.swing.JLabel alertsLabel;
     private javax.swing.JCheckBox chResis;
     private javax.swing.JButton checkOut;
     private javax.swing.JButton delQoute;
@@ -428,7 +754,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -441,6 +766,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JSpinner lenghtSpinner;
     private javax.swing.JButton ordMorePipe;
     private javax.swing.JButton order;
     private javax.swing.JCheckBox outMetRein;

@@ -16,13 +16,17 @@ public class Type_1 extends Pipes {
     
     public Type_1(int grade, int quantity, double lenght,double outDiam, boolean chmRes) {
         super(grade, quantity, lenght, outDiam, chmRes);
-        this.additionalCost = 1.00;
-        
-        if (this.chmRes) {
-            this.additionalCost += 0.12;
-        } 
+        extraCost();
     }
 
+    public void extraCost()
+    {
+        additionalCost = 1.00;
+        
+        if (this.chmRes) {
+           additionalCost += 0.12;
+        } 
+    }
     
     // return the cost of the pipe
     @Override
