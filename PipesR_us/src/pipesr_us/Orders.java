@@ -19,31 +19,35 @@ public class Orders {
 
     private ArrayList<Pipes> pipes = new ArrayList<>();
 
-    public Orders() {
-       
+    public Orders(){
+        
+    }
+    public Orders(ArrayList<Pipes> oPipes) {
+       pipes = oPipes;
     }
 
     //Adds specified pipe to ArrayList<Pipes>.
     public void addPipe(Pipes pName) {
-
+        pipes.add(pName);
     }
 
     //Empty the Pipe array.
     public void empty() {
-
+        pipes.clear();
     }
 
     //Returns the total price of the order.
-    public String getTotal() {
+    public double getTotal(ArrayList<Pipes> oPipes) {
         double total = 0.0;
-
-        return null;
+        for(int i = 0; i<oPipes.size();i++){
+            total = total + oPipes.get(i).pipeCost();
+        }
+        return total;
     }
 
     //Returns a list of pipes in the Order.
-    public String pipesOrderd() {
-
-        return null;
+    public ArrayList<Pipes> pipesOrderd() {
+        return pipes;
     }
 
     /**

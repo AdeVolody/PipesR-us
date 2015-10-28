@@ -31,10 +31,10 @@ public class Basket {
     
      //Adds specified order to ArrayList<Order>.
     public void addOrder(Orders orders) {
-        
+        this.orders.add(orders);
     }
 
-    
+    //not sure what u want me to do here
     //Outputs information regarding each order stored in the basket.
     public void ordersPlaced() {
         
@@ -43,14 +43,13 @@ public class Basket {
     // Accessor and Mutator methods.
     //return Basket name
     public String getName() {
-        
-        return null;
+        return name;
     } 
 
     
     // Returns amount of Orders.
     public int amount() {
-        return 0;
+        return orders.size();
     } 
 
 }
