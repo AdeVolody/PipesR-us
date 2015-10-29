@@ -23,17 +23,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="classForm" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="classForm" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="classForm">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -53,7 +53,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTabbedPane2" max="32767" attributes="0"/>
+                              <Component id="innerClassForm" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
@@ -70,7 +70,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                      <Component id="costLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="order" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -85,26 +85,26 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane2" min="-2" max="-2" attributes="0"/>
+                      <Component id="innerClassForm" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="alertsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="costLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="order" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="reset" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+            <Container class="javax.swing.JTabbedPane" name="innerClassForm">
               <Properties>
                 <Property name="tabPlacement" type="int" value="3"/>
               </Properties>
@@ -132,11 +132,11 @@
                                       <Component id="lenghtSpinner" min="-2" pref="74" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="QuantSpinner" min="-2" pref="63" max="-2" attributes="0"/>
+                                              <Component id="QuantSpinner" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -207,7 +207,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="27" max="32767" attributes="0"/>
+                              <EmptySpace pref="30" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -256,16 +256,6 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Quantity:"/>
                       </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSpinner" name="QuantSpinner">
-                      <Properties>
-                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                          <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="QuantSpinnerStateChanged"/>
-                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel4">
                       <Properties>
@@ -339,6 +329,16 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrComboBox2ActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JSpinner" name="QuantSpinner">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="QuantSpinnerStateChanged"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel6">
@@ -373,7 +373,7 @@
                               <Component id="inInLayer" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="outMetRein" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="88" max="32767" attributes="0"/>
+                              <EmptySpace pref="91" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -438,7 +438,7 @@
                 <Property name="text" type="java.lang.String" value="Total Cost:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel10">
+            <Component class="javax.swing.JLabel" name="costLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xa3;0.00"/>
               </Properties>
@@ -477,15 +477,16 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="600" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="addPipe" min="-2" max="-2" attributes="0"/>
+                              <Component id="delAllQoute" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="delQoute" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="checkOut" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jScrollPane1" pref="590" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -498,9 +499,9 @@
                       <Component id="jScrollPane1" min="-2" pref="277" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addPipe" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="delQoute" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="delAllQoute" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="checkOut" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="delQoute" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
@@ -517,37 +518,39 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTable3">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="9" rowCount="4">
-                        <Column editable="true" title="Grade" type="java.lang.Object"/>
-                        <Column editable="true" title="Size" type="java.lang.Object"/>
-                        <Column editable="true" title="Colours" type="java.lang.Object"/>
-                        <Column editable="true" title="Insulation" type="java.lang.Object"/>
-                        <Column editable="true" title="Reinforcement" type="java.lang.Object"/>
-                        <Column editable="true" title="Chemical Resistance" type="java.lang.Object"/>
-                        <Column editable="true" title="Cost" type="java.lang.Object"/>
-                        <Column editable="true" title="Quantity" type="java.lang.Object"/>
-                        <Column editable="true" title="Total" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="basketTable" type="code"/>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="addPipe">
+            <Component class="javax.swing.JButton" name="delAllQoute">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add Pipe"/>
+                <Property name="text" type="java.lang.String" value="Delete All"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="delQoute">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Delete Quote"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delAllQouteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="checkOut">
               <Properties>
                 <Property name="text" type="java.lang.String" value="CheckOut"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkOutActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="delQoute">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Delete Qoute"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delQouteActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -5,6 +5,8 @@
  */
 package pipesr_us;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Adecrown
@@ -45,7 +47,8 @@ public class Type_5 extends Pipes{
     protected double pipeCost() {
         System.out.println(this.volume);
         double cost =   Math.pow(this.volume, this.costPerGrade) * additionalCost;
-        return cost;
+        double convert = Double.parseDouble(new DecimalFormat("0.00").format(cost));
+        return convert;
     }
     
     

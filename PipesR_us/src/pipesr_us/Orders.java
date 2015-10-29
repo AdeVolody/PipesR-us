@@ -36,27 +36,53 @@ public class Orders {
         pipes.clear();
     }
 
+   
+    
+     public void removeOrder(int index)
+    {
+        pipes.remove(index);
+    }
+    
     //Returns the total price of the order.
     public double getTotal(ArrayList<Pipes> oPipes) {
         double total = 0.0;
         for(int i = 0; i<oPipes.size();i++){
-            total = total + oPipes.get(i).pipeCost();
+            total = total + oPipes.get(i).totalCost();
         }
         return total;
     }
 
     //Returns a list of pipes in the Order.
-    public ArrayList<Pipes> pipesOrderd() {
-        return pipes;
+    public String pipesOrderd() {
+        String pipeList="";
+        
+        
+        for(Pipes pipe : pipes){
+            pipeList += "<Type "+pipe.pipeType()+"(x"+pipe.getQuantity()+")> ";
+        }
+        return pipeList;
     }
+    
+    
+    
+public void pipeInfo(){
+        int i=1;
+        double area=0.0,cost=0.0;
+        for(Pipes b : pipes){
+            System.out.println("x"+b.quantity+" Box "+i);
 
-    /**
-     * System Out puts all information about each pipe in the order. including
-     * the area, cost and total cost.
-     */
-    public void outputBoxes() {
+            area=Double.parseDouble(new DecimalFormat("#.##").format(b.volume));
+            System.out.println("\tArea: "+area+"m^2");
 
+            cost=Double.parseDouble(new DecimalFormat("#.##").format(b.pipeCost()));
+            System.out.println("\tCost per Box: £"+cost);
+
+            System.out.println("\tTotal cost: £"+b.totalCost());
+
+            i++;
+        } System.out.println();
     }
+    
 
     // Accessor & Mutator methods.
     // Returns amount of pipes.

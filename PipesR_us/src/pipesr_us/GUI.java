@@ -5,7 +5,9 @@
  */
 package pipesr_us;
 
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,15 +17,18 @@ public class GUI extends javax.swing.JFrame {
 
     private String alerts;
     private int grade, quantity, colours;
-    private double lenght, outDiam;
+    private double lenght, outDiam, cost, pipeCost;
     private boolean error, chmRes, insulation, reinforcement;
     private Basket basket;
-
+    private DefaultTableModel basketTable, orderTable;
+    private  Pipes pipes = null;
+   
     /**
      * Creates new form GUI
      */
     public GUI() {
 
+        createNewTable();
         initComponents();
         alerts = "Good";
         error = false;
@@ -31,7 +36,7 @@ public class GUI extends javax.swing.JFrame {
 
         // creates basket.
         basket = new Basket("Basket");
-
+        
         // Add an Order to basket.
         basket.addOrder(new Orders());
     }
@@ -45,22 +50,22 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        classForm = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        innerClassForm = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lenghtSpinner = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         OuterSpinner = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        QuantSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         GradeSpinner = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         CrComboBox1 = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         CrComboBox2 = new javax.swing.JComboBox();
+        QuantSpinner = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
         inInLayer = new javax.swing.JCheckBox();
         outMetRein = new javax.swing.JCheckBox();
@@ -68,15 +73,15 @@ public class GUI extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         alertsLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        costLabel = new javax.swing.JLabel();
         order = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        addPipe = new javax.swing.JButton();
-        delQoute = new javax.swing.JButton();
+        delAllQoute = new javax.swing.JButton();
         checkOut = new javax.swing.JButton();
+        delQoute = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -84,7 +89,7 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane2.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        innerClassForm.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setText("Lenght:");
@@ -108,13 +113,6 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel3.setText("Quantity:");
-
-        QuantSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        QuantSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                QuantSpinnerStateChanged(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel4.setText("Grade:");
@@ -146,6 +144,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        QuantSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        QuantSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                QuantSpinnerStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -158,11 +163,11 @@ public class GUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lenghtSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(QuantSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(QuantSpinner))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,10 +218,10 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(QuantSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Specification", jPanel5);
+        innerClassForm.addTab("Specification", jPanel5);
 
         inInLayer.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         inInLayer.setText("Inner Insulation Layer");
@@ -268,10 +273,10 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(inInLayer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outMetRein)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("More", jPanel6);
+        innerClassForm.addTab("More", jPanel6);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel7.setText("Alerts:");
@@ -281,7 +286,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel9.setText("Total Cost:");
 
-        jLabel10.setText("£0.00");
+        costLabel.setText("£0.00");
 
         order.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         order.setText("GET QUOTES");
@@ -302,7 +307,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane2))
+                        .addComponent(innerClassForm))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +321,7 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10))
+                                .addComponent(costLabel))
                             .addComponent(order, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                         .addGap(13, 13, 13)))
                 .addContainerGap())
@@ -325,56 +330,63 @@ public class GUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(innerClassForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(alertsLabel)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(costLabel))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(order)
                     .addComponent(reset))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Pipes", jPanel1);
+        classForm.addTab("Pipes", jPanel1);
 
         jScrollPane1.setToolTipText("");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Grade", "Size", "Colours", "Insulation", "Reinforcement", "Chemical Resistance", "Cost", "Quantity", "Total"
-            }
-        ));
+        jTable3.setModel(basketTable);
+        jTable3.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable3);
 
-        addPipe.setText("Add Pipe");
-
-        delQoute.setText("Delete Quote");
+        delAllQoute.setText("Delete All");
+        delAllQoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delAllQouteActionPerformed(evt);
+            }
+        });
 
         checkOut.setText("CheckOut");
+        checkOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOutActionPerformed(evt);
+            }
+        });
+
+        delQoute.setText("Delete Qoute");
+        delQoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delQouteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(addPipe)
+                        .addComponent(delAllQoute)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(delQoute)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(checkOut)))
+                        .addComponent(checkOut))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -384,13 +396,13 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addPipe)
-                    .addComponent(delQoute)
-                    .addComponent(checkOut))
+                    .addComponent(delAllQoute)
+                    .addComponent(checkOut)
+                    .addComponent(delQoute))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Quotes", jPanel3);
+        classForm.addTab("Quotes", jPanel3);
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -429,22 +441,45 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Orders", jPanel2);
+        classForm.addTab("Orders", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(classForm)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(classForm)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void createNewTable() {
+
+        // Basket Table.
+        String data1[][] = {};
+        String col1[] = {"Grade", "Quantity", "Lenghts", "Diameter", "Colours",
+            "Chemical Resistance", "Inner Insulation", "Outer Reinforcement", "Pipe Cost", "Total Cost"};
+        this.basketTable = new DefaultTableModel(data1, col1) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disable editing.
+            }
+        };
+
+        // Order Table.
+        String data2[][] = {};
+        String col2[] = {"Order No.", "Boxes", "Total"};
+        this.orderTable = new DefaultTableModel(data2, col2) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disable editing.
+            }
+        };
+    }
     private void inInLayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inInLayerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inInLayerActionPerformed
@@ -452,13 +487,13 @@ public class GUI extends javax.swing.JFrame {
     private void lenghtSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lenghtSpinnerStateChanged
         // TODO add your handling code here:
         try {
-            lenght = (Integer) GradeSpinner.getValue(); // Store the grade.
+            lenght = (Integer) lenghtSpinner.getValue();
         } catch (NumberFormatException e) {
             System.out.println("NumberFormatException: " + e.getMessage());
 
         }
 
-        validator();
+        costValidator();
     }//GEN-LAST:event_lenghtSpinnerStateChanged
 
     private void GradeSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_GradeSpinnerStateChanged
@@ -470,33 +505,21 @@ public class GUI extends javax.swing.JFrame {
 
         }
 
-        validator();
+        costValidator();
 
     }//GEN-LAST:event_GradeSpinnerStateChanged
 
     private void OuterSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_OuterSpinnerStateChanged
         // TODO add your handling code here:
         try {
-            outDiam = (Integer) OuterSpinner.getValue(); // Store the grade.
+            outDiam = (Integer) OuterSpinner.getValue();
         } catch (NumberFormatException e) {
             System.out.println("NumberFormatException: " + e.getMessage());
 
         }
 
-        validator();
+        costValidator();
     }//GEN-LAST:event_OuterSpinnerStateChanged
-
-    private void QuantSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_QuantSpinnerStateChanged
-        // TODO add your handling code here:
-        try {
-            quantity = (Integer) QuantSpinner.getValue(); // Store the grade.
-        } catch (NumberFormatException e) {
-            System.out.println("NumberFormatException: " + e.getMessage());
-
-        }
-
-        validator();
-    }//GEN-LAST:event_QuantSpinnerStateChanged
 
     private void CrComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -509,7 +532,7 @@ public class GUI extends javax.swing.JFrame {
             this.colours = 0; // Set the colours to zero.
         }
 
-        validator();
+        costValidator();
 
         System.out.println("TYpe 1: " + colours);
     }//GEN-LAST:event_CrComboBox1ActionPerformed
@@ -528,7 +551,7 @@ public class GUI extends javax.swing.JFrame {
             }
         }
 
-        validator();
+        costValidator();
 
         System.out.println("TYpe 2: " + colours);
 
@@ -542,7 +565,7 @@ public class GUI extends javax.swing.JFrame {
             insulation = false;
         }
 
-        validator();
+        costValidator();
 
     }//GEN-LAST:event_inInLayerItemStateChanged
 
@@ -555,7 +578,7 @@ public class GUI extends javax.swing.JFrame {
             reinforcement = false;
         }
 
-        validator();
+        costValidator();
     }//GEN-LAST:event_outMetReinItemStateChanged
 
     private void chResisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chResisItemStateChanged
@@ -566,20 +589,105 @@ public class GUI extends javax.swing.JFrame {
             chmRes = false;
         }
 
-        validator();
+        costValidator();
     }//GEN-LAST:event_chResisItemStateChanged
 
     private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
         // TODO add your handling code here:
-        if(error == false)
-        {
+        if (error == false) {
             createPipesType();
+
+            String stCost = new DecimalFormat("'£'0.00").format(cost);
+            basketTable.insertRow(jTable3.getRowCount(), new Object[]{
+                this.grade, // Grade.
+                quantity,
+                lenght,
+                outDiam + ((outDiam / 100) * 90),
+                colours,
+                chmRes,
+                insulation,
+                reinforcement,
+                pipeCost,
+                stCost
+            // total() // Total strCost of Box.
+            });
+            classForm.setSelectedIndex(1); // Moves to Basket tab.
+        } else {
+            JOptionPane.showMessageDialog(this, alerts);
+        }
+    }//GEN-LAST:event_orderActionPerformed
+
+    private void checkOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkOutActionPerformed
+
+    private void QuantSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_QuantSpinnerStateChanged
+        // TODO add your handling code here:
+        try {
+            quantity = (Integer) QuantSpinner.getValue();
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+
+        costValidator();
+    }//GEN-LAST:event_QuantSpinnerStateChanged
+
+    private void delAllQouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAllQouteActionPerformed
+        // TODO add your handling code here:
+
+        String msg = "Are you sure you want to clear the basket?";
+        int ans;
+        ans = JOptionPane.showConfirmDialog(this, msg, msg,
+                JOptionPane.YES_NO_OPTION);
+        if (ans == JOptionPane.YES_OPTION) {
+            // If the user clicked yes, clear the basket and clear the order.
+            clearBasket(1);
+
+        }
+    }//GEN-LAST:event_delAllQouteActionPerformed
+
+    private void delQouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delQouteActionPerformed
+        // TODO add your handling code here:
+
+        String msg = "Are you sure you want to delete this order?";
+        int ans;
+        ans = JOptionPane.showConfirmDialog(this, msg, msg,
+                JOptionPane.YES_NO_OPTION);
+        if (ans == JOptionPane.YES_OPTION) {
+            // If the user clicked yes, clear the basket and clear the order.
+            clearBasket(2);
+
+        }
+    }//GEN-LAST:event_delQouteActionPerformed
+
+    private void clearBasket(int op) {
+        if (op == 1) {
+            int i, count;
+            count = jTable3.getRowCount(); // Amount of rows in Basket.
+            for (i = 0; i < count; i++) {
+                // Because the index changes dynamically, start removing from 0.
+                basketTable.removeRow(0); // Remove all row.
+            }
+            
+            basket.orders.get(basket.amount() - 1).empty();
+            
+        } else if (op == 2) {
+            int skip;
+
+            skip = jTable3.getSelectedRow();
+
+            basketTable.removeRow(skip); // Remove selected row.
+           // System.out.println(skip);
+            //System.out.println(basket.amount());
+            //System.out.println("oi: "+basket.orders.size());//.removeOrder(skip);
         }
         else
         {
-            JOptionPane.showMessageDialog(this,alerts);
+            alerts = "Something went wrong, try again.";
         }
-    }//GEN-LAST:event_orderActionPerformed
+
+    }
 
     public void validator() {
 
@@ -649,9 +757,9 @@ public class GUI extends javax.swing.JFrame {
         } else if (grade >= 2 && this.colours < 2 && (insulation == true
                 || reinforcement == true)) {
             // If user chose insulation options, but hasn't chosen 2 colours.
-            if (jTabbedPane2.getSelectedIndex() != 0) {
+            if (innerClassForm.getSelectedIndex() != 0) {
                 // If main options tab isn't selected, select it.
-                jTabbedPane2.setSelectedIndex(0);
+                innerClassForm.setSelectedIndex(0);
             }
             alerts = "Please select two colours (in order to have"
                     + " Re-inforced Bottoms/Corners).";
@@ -663,28 +771,41 @@ public class GUI extends javax.swing.JFrame {
         }
         alertsLabel.setText(alerts); // Update the status message.
 
-       
-
     }
 
     public void createPipesType() {
-        Pipes pipes = null;
+       
         if (grade >= 1 & grade <= 3 & colours == 0 & insulation == false & reinforcement == false) {
-            pipes = pipes = new Type_1(grade, quantity, lenght, outDiam, chmRes);
+            pipes = new Type_1(grade, quantity, lenght, outDiam, chmRes);
+            
             error = false; // No errors
-            System.out.println(pipes.totalCost());
+            cost = pipes.totalCost();
+            pipeCost = pipes.pipeCost();
+            //System.out.println(pipes.totalCost());
         } else if (grade >= 2 & grade <= 4 & colours == 1 & insulation == false & reinforcement == false) {
-            pipes = pipes = new Type_2(grade, quantity, lenght, outDiam, chmRes);
+            pipes = new Type_2(grade, quantity, lenght, outDiam, chmRes);
+             
             error = false; // No errors
+            cost = pipes.totalCost();
+            pipeCost = pipes.pipeCost();
         } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == false & reinforcement == false) {
-            pipes = pipes = new Type_3(grade, quantity, lenght, outDiam, chmRes);
+            pipes = new Type_3(grade, quantity, lenght, outDiam, chmRes);
+             
             error = false; // No errors
+            cost = pipes.totalCost();
+            pipeCost = pipes.pipeCost();
         } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == true & reinforcement == false) {
-            pipes = pipes = new Type_4(grade, quantity, lenght, outDiam, chmRes);
+            pipes = new Type_4(grade, quantity, lenght, outDiam, chmRes);
+            
             error = false; // No errors
+            cost = pipes.totalCost();
+            pipeCost = pipes.pipeCost();
         } else if (grade >= 3 & grade <= 5 & colours == 2 & insulation == true & reinforcement == true) {
-            pipes = pipes = new Type_5(grade, quantity, lenght, outDiam, chmRes);
+            pipes = new Type_5(grade, quantity, lenght, outDiam, chmRes);
+             
             error = false; // No errors
+            cost = pipes.totalCost();
+            pipeCost = pipes.pipeCost();
         } else {
             error = true;
             alerts = "Order not accepted";
@@ -693,9 +814,21 @@ public class GUI extends javax.swing.JFrame {
         if (error = false) {
             // If there were no errors, add pipes to the order.
             basket.orders.get(basket.amount() - 1).addPipe(pipes);
+            
 
         }
-       
+
+    }
+
+    public void labelCost() {
+        String stCost = new DecimalFormat("'£'0.00").format(cost);
+        costLabel.setText(stCost);
+    }
+
+    public void costValidator() {
+        validator();
+        createPipesType();
+        labelCost();
     }
 
     /**
@@ -740,14 +873,16 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JSpinner GradeSpinner;
     private javax.swing.JSpinner OuterSpinner;
     private javax.swing.JSpinner QuantSpinner;
-    private javax.swing.JButton addPipe;
     private javax.swing.JLabel alertsLabel;
     private javax.swing.JCheckBox chResis;
     private javax.swing.JButton checkOut;
+    private javax.swing.JTabbedPane classForm;
+    private javax.swing.JLabel costLabel;
+    private javax.swing.JButton delAllQoute;
     private javax.swing.JButton delQoute;
     private javax.swing.JCheckBox inInLayer;
+    private javax.swing.JTabbedPane innerClassForm;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -762,8 +897,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JSpinner lenghtSpinner;

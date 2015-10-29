@@ -47,7 +47,7 @@ public class Main {
         
 
         // Output information regarding the order.
-        basket1.ordersPlaced();
+       basket1.outputOrders();
     }
     
 }

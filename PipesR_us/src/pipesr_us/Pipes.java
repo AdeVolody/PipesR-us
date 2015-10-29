@@ -28,6 +28,8 @@ public abstract class Pipes {
         
         this.volume = volume();
         costPerGrade = gradeCost(grade);
+        
+       
     }
 
     // returns the cost

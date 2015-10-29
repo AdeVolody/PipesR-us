@@ -28,16 +28,24 @@ public class Basket {
         this.name = name;
     }
 
+     public void removeOrder(int index)
+    {
+        orders.remove(index);
+    }
     
      //Adds specified order to ArrayList<Order>.
     public void addOrder(Orders orders) {
         this.orders.add(orders);
     }
 
-    //not sure what u want me to do here
-    //Outputs information regarding each order stored in the basket.
-    public void ordersPlaced() {
-        
+    public void outputOrders(){
+        int i=1;
+        for(Orders o : orders){
+            System.out.println("--Order #"+i+"--");
+            o.pipeInfo();
+
+            i++;
+        }
     }
 
     // Accessor and Mutator methods.
