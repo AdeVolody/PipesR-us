@@ -88,6 +88,11 @@ public class GUI extends javax.swing.JFrame {
         ordMorePipe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         innerClassForm.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
 
@@ -577,7 +582,7 @@ public class GUI extends javax.swing.JFrame {
                 reinforcement,
                 pipeCost,
                 stCost
-            
+
             });
             classForm.setSelectedIndex(1); // Moves to Basket tab.
         } else {
@@ -628,6 +633,21 @@ public class GUI extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_delQouteActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        try {
+            quantity = (Integer) QuantSpinner.getValue();
+            outDiam = (Integer) OuterSpinner.getValue();
+            grade = (Integer) GradeSpinner.getValue();
+            lenght = (Integer) lenghtSpinner.getValue();
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: " + e.getMessage());
+
+        }
+        costValidator();
+
+    }//GEN-LAST:event_formWindowOpened
 
     private void createNewTable() {
 
@@ -709,22 +729,22 @@ public class GUI extends javax.swing.JFrame {
             // insulation.
             if (grade >= 2 && this.colours == 2) {
                 // If grade is more than or equal to 2 AND has 2 colours.
-                inInLayer.setEnabled(true); 
+                inInLayer.setEnabled(true);
 
             } else if (grade < 2 || this.colours != 2) {
                 // If grade is less than 2 OR if it doesn't have 2 colours.
-                inInLayer.setEnabled(false); 
+                inInLayer.setEnabled(false);
 
             }
 
-           // Rienforcent.
+            // Rienforcent.
             if (grade >= 3 && this.colours == 2 && insulation == true) {
-                
+
                 outMetRein.setEnabled(true);
 
             } else if (grade < 3 || this.colours != 2 || insulation == false) {
-                
-                outMetRein.setEnabled(false); 
+
+                outMetRein.setEnabled(false);
 
             }
         }
