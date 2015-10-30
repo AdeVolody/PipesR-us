@@ -67,15 +67,16 @@ public class Orders {
     
 public void pipeInfo(){
         int i=1;
-        double area=0.0,cost=0.0;
+        double volume =0.0;
+        double cost=0.0;
         for(Pipes b : pipes){
-            System.out.println("x"+b.quantity+" Box "+i);
+            System.out.println("Pipe "+i+ " quantity: "+b.quantity);
 
-            area=Double.parseDouble(new DecimalFormat("#.##").format(b.volume));
-            System.out.println("\tArea: "+area+"m^2");
+            volume=Double.parseDouble(new DecimalFormat("#.##").format(b.volume));
+            System.out.println("\tVolume: "+volume);
 
             cost=Double.parseDouble(new DecimalFormat("#.##").format(b.pipeCost()));
-            System.out.println("\tCost per Box: £"+cost);
+            System.out.println("\tCost per pipe: £"+cost);
 
             System.out.println("\tTotal cost: £"+b.totalCost());
 
@@ -84,7 +85,7 @@ public void pipeInfo(){
     }
     
 
-    // Accessor & Mutator methods.
+    
     // Returns amount of pipes.
     public int amount() {
         return 0;

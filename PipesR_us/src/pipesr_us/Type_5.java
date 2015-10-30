@@ -45,7 +45,7 @@ public class Type_5 extends Pipes{
     // return the cost of the pipe
     @Override
     protected double pipeCost() {
-        System.out.println(this.volume);
+        //System.out.println(this.volume);
         double cost =   Math.pow(this.volume, this.costPerGrade) * additionalCost;
         double convert = Double.parseDouble(new DecimalFormat("0.00").format(cost));
         return convert;

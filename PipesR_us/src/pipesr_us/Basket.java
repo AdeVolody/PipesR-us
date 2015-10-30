@@ -41,7 +41,7 @@ public class Basket {
     public void outputOrders(){
         int i=1;
         for(Orders o : orders){
-            System.out.println("--Order #"+i+"--");
+            System.out.println("Order"+i+": ");
             o.pipeInfo();
 
             i++;

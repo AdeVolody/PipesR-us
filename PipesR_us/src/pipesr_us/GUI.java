@@ -21,8 +21,8 @@ public class GUI extends javax.swing.JFrame {
     private boolean error, chmRes, insulation, reinforcement;
     private Basket basket;
     private DefaultTableModel basketTable, orderTable;
-    private  Pipes pipes = null;
-   
+    private Pipes pipes = null;
+
     /**
      * Creates new form GUI
      */
@@ -36,7 +36,7 @@ public class GUI extends javax.swing.JFrame {
 
         // creates basket.
         basket = new Basket("Basket");
-        
+
         // Add an Order to basket.
         basket.addOrder(new Orders());
     }
@@ -404,17 +404,7 @@ public class GUI extends javax.swing.JFrame {
 
         classForm.addTab("Quotes", jPanel3);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Order No", "Pipe", "Total"
-            }
-        ));
+        jTable4.setModel(orderTable);
         jScrollPane3.setViewportView(jTable4);
 
         ordMorePipe.setText("Order More Pipes");
@@ -457,29 +447,7 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void createNewTable() {
 
-        // Basket Table.
-        String data1[][] = {};
-        String col1[] = {"Grade", "Quantity", "Lenghts", "Diameter", "Colours",
-            "Chemical Resistance", "Inner Insulation", "Outer Reinforcement", "Pipe Cost", "Total Cost"};
-        this.basketTable = new DefaultTableModel(data1, col1) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Disable editing.
-            }
-        };
-
-        // Order Table.
-        String data2[][] = {};
-        String col2[] = {"Order No.", "Boxes", "Total"};
-        this.orderTable = new DefaultTableModel(data2, col2) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Disable editing.
-            }
-        };
-    }
     private void inInLayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inInLayerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inInLayerActionPerformed
@@ -609,7 +577,7 @@ public class GUI extends javax.swing.JFrame {
                 reinforcement,
                 pipeCost,
                 stCost
-            // total() // Total strCost of Box.
+            
             });
             classForm.setSelectedIndex(1); // Moves to Basket tab.
         } else {
@@ -661,29 +629,51 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_delQouteActionPerformed
 
-    private void clearBasket(int op) {
-        if (op == 1) {
+    private void createNewTable() {
+
+        // Basket Table.
+        String data1[][] = {};
+        String col1[] = {"Grade", "Quantity", "Lenghts", "Diameter", "Colours",
+            "Chemical Resistance", "Inner Insulation", "Outer Reinforcement", "Pipe Cost", "Total Cost"};
+        this.basketTable = new DefaultTableModel(data1, col1) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disable editing.
+            }
+        };
+
+        // Order Table.
+        String data2[][] = {};
+        String col2[] = {"Order No.", "Pipe Type", "Size", "Total"};
+        this.orderTable = new DefaultTableModel(data2, col2) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disable editing.
+            }
+        };
+    }
+
+    private void clearBasket(int clear) {
+        if (clear == 1) {
             int i, count;
             count = jTable3.getRowCount(); // Amount of rows in Basket.
             for (i = 0; i < count; i++) {
                 // Because the index changes dynamically, start removing from 0.
                 basketTable.removeRow(0); // Remove all row.
             }
-            
+
             basket.orders.get(basket.amount() - 1).empty();
-            
-        } else if (op == 2) {
+
+        } else if (clear == 2) {
             int skip;
 
             skip = jTable3.getSelectedRow();
 
             basketTable.removeRow(skip); // Remove selected row.
-           // System.out.println(skip);
+            // System.out.println(skip);
             //System.out.println(basket.amount());
             //System.out.println("oi: "+basket.orders.size());//.removeOrder(skip);
-        }
-        else
-        {
+        } else {
             alerts = "Something went wrong, try again.";
         }
 
@@ -716,27 +706,25 @@ public class GUI extends javax.swing.JFrame {
                 CrComboBox2.setEnabled(false); // Disable Colour 2.
             }
 
-            // Reinforced Bottoms.
+            // insulation.
             if (grade >= 2 && this.colours == 2) {
                 // If grade is more than or equal to 2 AND has 2 colours.
-                inInLayer.setEnabled(true); // Enable Re-inforced Bottoms.
+                inInLayer.setEnabled(true); 
 
             } else if (grade < 2 || this.colours != 2) {
                 // If grade is less than 2 OR if it doesn't have 2 colours.
-                inInLayer.setEnabled(false); // Disable Re-inforced Bottoms.
+                inInLayer.setEnabled(false); 
 
             }
 
-            // Reinforced Corners.
+           // Rienforcent.
             if (grade >= 3 && this.colours == 2 && insulation == true) {
-                // If grade is more than or equal to 3 AND has 2 colours.
-                // AND Re-inforced Bottoms are selected.
+                
                 outMetRein.setEnabled(true);
 
             } else if (grade < 3 || this.colours != 2 || insulation == false) {
-                // If grade is less than 3 OR if it doesn't have 2 colours.
-                // OR if Re-inforced Bottoms are not selected.
-                outMetRein.setEnabled(false); // Disable Re-inforced Corners.
+                
+                outMetRein.setEnabled(false); 
 
             }
         }
@@ -761,8 +749,7 @@ public class GUI extends javax.swing.JFrame {
                 // If main options tab isn't selected, select it.
                 innerClassForm.setSelectedIndex(0);
             }
-            alerts = "Please select two colours (in order to have"
-                    + " Re-inforced Bottoms/Corners).";
+            alerts = "Please select two colours";
             error = true;
         } else {
             // If validation is okay.
@@ -774,35 +761,35 @@ public class GUI extends javax.swing.JFrame {
     }
 
     public void createPipesType() {
-       
+
         if (grade >= 1 & grade <= 3 & colours == 0 & insulation == false & reinforcement == false) {
             pipes = new Type_1(grade, quantity, lenght, outDiam, chmRes);
-            
+
             error = false; // No errors
             cost = pipes.totalCost();
             pipeCost = pipes.pipeCost();
             //System.out.println(pipes.totalCost());
         } else if (grade >= 2 & grade <= 4 & colours == 1 & insulation == false & reinforcement == false) {
             pipes = new Type_2(grade, quantity, lenght, outDiam, chmRes);
-             
+
             error = false; // No errors
             cost = pipes.totalCost();
             pipeCost = pipes.pipeCost();
         } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == false & reinforcement == false) {
             pipes = new Type_3(grade, quantity, lenght, outDiam, chmRes);
-             
+
             error = false; // No errors
             cost = pipes.totalCost();
             pipeCost = pipes.pipeCost();
         } else if (grade >= 2 & grade <= 5 & colours == 2 & insulation == true & reinforcement == false) {
             pipes = new Type_4(grade, quantity, lenght, outDiam, chmRes);
-            
+
             error = false; // No errors
             cost = pipes.totalCost();
             pipeCost = pipes.pipeCost();
         } else if (grade >= 3 & grade <= 5 & colours == 2 & insulation == true & reinforcement == true) {
             pipes = new Type_5(grade, quantity, lenght, outDiam, chmRes);
-             
+
             error = false; // No errors
             cost = pipes.totalCost();
             pipeCost = pipes.pipeCost();
@@ -814,7 +801,6 @@ public class GUI extends javax.swing.JFrame {
         if (error = false) {
             // If there were no errors, add pipes to the order.
             basket.orders.get(basket.amount() - 1).addPipe(pipes);
-            
 
         }
 

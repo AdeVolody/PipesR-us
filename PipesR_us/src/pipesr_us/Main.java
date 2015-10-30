@@ -17,11 +17,9 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Pipes pier = new Type_5(1,1,3,1,true);
-        
-        System.out.println(pier.totalCost());
         
         
+       
         
         
         
@@ -36,10 +34,12 @@ public class Main {
         
 
         // Creating the pipe.
-        Pipes type2 = new Type_2(1, 2, 2, 6, true);
+        Pipes pig = new Type_2(1, 2, 2, 6, true);
+        Pipes pier = new Type_5(1,1,3,1,true);
        
         // Adding pipe to the orders.
-        order1.addPipe(type2);
+        order1.addPipe(pig);
+        order1.addPipe(pier);
         
 
         // Adding orders to the basket.
