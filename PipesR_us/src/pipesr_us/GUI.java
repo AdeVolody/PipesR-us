@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author up720163
+ * @author up720163 & Up739558
  */
 public class GUI extends javax.swing.JFrame {
 
@@ -567,6 +567,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
         // TODO add your handling code here:
+        validator();
         if (error == false) {
             createPipesType();
 
@@ -762,7 +763,7 @@ public class GUI extends javax.swing.JFrame {
             // If user chose colours, but grade is 1.
             alerts = "Please choose a grade between 2-5.";
             error = true;
-        } else if (grade >= 2 && this.colours < 2 && (insulation == true
+        }  else if (grade >= 2 && this.colours < 2 && (insulation == true
                 || reinforcement == true)) {
             // If user chose insulation options, but hasn't chosen 2 colours.
             if (innerClassForm.getSelectedIndex() != 0) {

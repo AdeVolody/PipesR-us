@@ -22,6 +22,7 @@ public class Type_1 extends Pipes {
 
     
 
+    //contains the additionl cost
     public void extraCost() {
         additionalCost = 1.00;
 
