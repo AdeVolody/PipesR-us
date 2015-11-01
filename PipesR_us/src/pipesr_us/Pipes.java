@@ -14,9 +14,9 @@ import java.text.DecimalFormat;
 public abstract class Pipes {
 
     protected int grade, quantity;
-    protected double lenght, outDiam;
+    protected double lenght, outDiam,costPerGrade,volume;
     protected boolean chmRes, insulation, reinforcement;
-    protected double costPerGrade,volume;
+    
 
     public Pipes(int grade, int quantity, double lenght,
             double outDiam, boolean chmRes) {
