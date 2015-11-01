@@ -32,13 +32,7 @@ public abstract class Pipes {
        
     }
 
-    // returns the cost
-    abstract protected double pipeCost();
     
-    
-    //Returns the type of pipe
-    abstract protected int pipeType();
-
     /**
      * This method Works out the overall cost of the Pipe. 
      * Cost of pipe * quantity = formatted to two decimal places.
@@ -82,6 +76,14 @@ public abstract class Pipes {
         return cost;
     }
 
+    // returns the cost
+    abstract protected double pipeCost();
+    
+    
+    //Returns the type of pipe
+    abstract protected int pipeType();
+
+    
     // Getters and Setters
     public int getGrade() {
         return grade;
