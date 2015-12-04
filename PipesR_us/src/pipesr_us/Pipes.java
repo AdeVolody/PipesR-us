@@ -13,20 +13,21 @@ import java.text.DecimalFormat;
  */
 public abstract class Pipes {
 
-    protected int grade, quantity;
-    protected double lenght, outDiam,costPerGrade,volume;
+    protected int grade, quantity,colours;
+    protected double lenght, outDiam,costPerGrade;
     protected boolean chmRes, insulation, reinforcement;
     
 
     public Pipes(int grade, int quantity, double lenght,
-            double outDiam, boolean chmRes) {
+            double outDiam, boolean chmRes,int colours,boolean insulation,boolean reinforcement) {
         this.grade = grade;
         this.quantity = quantity;
         this.lenght = lenght;
         this.outDiam = outDiam;
         this.chmRes = chmRes;
-        
-        this.volume = volume();
+        this.colours = colours;
+        this.insulation = insulation;
+        this.reinforcement = reinforcement;
         costPerGrade = gradeCost(grade);
         
        
@@ -43,14 +44,6 @@ public abstract class Pipes {
         return convert;
     }
 
-    
-     //This Works out the volume  of Pipe.
-    private double volume() {
-
-        double pipeVolume = 0.0;
-        pipeVolume += Math.PI * ((getOutDiam() / 100) * 90) * getLenght(); //volume of the pipe’s material
-        return pipeVolume;
-    }
 
     
     //Work out cost % for the specified grade. Cost of 1 cubic inch of plastic by grade
@@ -70,15 +63,48 @@ public abstract class Pipes {
                 cost = 0.40; // Grade 4.
                 break;
             case 5:
-                cost = 1.46; // Grade 5.
+                cost = 0.46; // Grade 5.
                 break;
         }
         return cost;
     }
 
     // returns the cost
-    abstract protected double pipeCost();
+    public double pipeCost(){
+        double innDiam = 0.9*outDiam;
+        double length = getLengthMeter()/0.0254;
+        double innVolume = Math.PI * Math.pow(innDiam/2,2)*length;
+        double outVolume = Math.PI * Math.pow(outDiam/2,2)*length;
+        double pipeVolume = (outVolume - innVolume);
+        
+        double cost = pipeVolume*gradeCost(getGrade());
+        double addCost = additionalCost();
+        cost *= (1+addCost);
+        return cost;
+    }
     
+    private double additionalCost(){
+        double addCost = 0.0;
+        if (colours>0){
+            if (colours==1){
+                addCost+=0.12;
+            }
+            if(colours==2){
+                addCost+=0.17;
+            }
+        }
+        if(chmRes==true){
+            addCost+=0.12;
+        }
+        if(insulation==true){
+            addCost+=0.14;
+        }
+        if(reinforcement==true){
+            addCost+=0.15;
+        }
+        addCost = Double.parseDouble(new DecimalFormat("0.00").format(addCost));
+        return addCost;
+    }
     
     //Returns the type of pipe
     abstract protected int pipeType();
@@ -96,6 +122,10 @@ public abstract class Pipes {
     public int getQuantity() {
         return quantity;
     }
+    
+    public int getColours(){
+        return colours;
+    }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -104,6 +134,10 @@ public abstract class Pipes {
     public double getLenght() {
         double inches = 39.37 * lenght;
         return inches;
+    }
+    
+    public double getLengthMeter(){
+        return lenght;
     }
 
     public void setLenght(double lenght) {
@@ -118,10 +152,15 @@ public abstract class Pipes {
         this.outDiam = outDiam;
     }
 
-    public boolean isChmRes() {
+    public boolean getChmRes() {
         return chmRes;
     }
-
+    public boolean getInsulation() {
+        return insulation;
+    }
+    public boolean getReinforcement() {
+        return reinforcement;
+    }
     public void setChmRes(boolean chmRes) {
         this.chmRes = chmRes;
     }

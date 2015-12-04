@@ -37,17 +37,9 @@ public class Basket {
     public void addOrder(Orders orders) {
         this.orders.add(orders);
     }
-
-    public void outputOrders(){
-        int i=1;
-        for(Orders o : orders){
-            System.out.println("Order"+i+": ");
-            o.pipeInfo();
-
-            i++;
-        }
+    public ArrayList<Orders> getOrders(){
+        return orders;
     }
-
     // Accessor and Mutator methods.
     //return Basket name
     public String getName() {

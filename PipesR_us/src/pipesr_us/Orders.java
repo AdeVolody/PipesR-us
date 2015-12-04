@@ -35,7 +35,9 @@ public class Orders {
     public void empty() {
         pipes.clear();
     }
-
+    public ArrayList<Pipes> getPipes(){
+        return pipes;
+    }
    
     
      public void removeOrder(int index)
@@ -63,26 +65,6 @@ public class Orders {
         return pipeList;
     }
     
-    
-    
-public void pipeInfo(){
-        int i=1;
-        double volume =0.0;
-        double cost=0.0;
-        for(Pipes b : pipes){
-            System.out.println("Pipe "+i+ " quantity: "+b.quantity);
-
-            volume=Double.parseDouble(new DecimalFormat("#.##").format(b.volume));
-            System.out.println("\tVolume: "+volume);
-
-            cost=Double.parseDouble(new DecimalFormat("#.##").format(b.pipeCost()));
-            System.out.println("\tCost per pipe: £"+cost);
-
-            System.out.println("\tTotal cost: £"+b.totalCost());
-
-            i++;
-        } System.out.println();
-    }
     
 
     

@@ -16,45 +16,11 @@ public class Type_3 extends Pipes{
     private double additionalCost;
 
     
-    public Type_3(int grade, int quantity, double lenght,double outDiam, boolean chmRes) {
-        super(grade, quantity, lenght, outDiam, chmRes);
+    public Type_3(int grade, int quantity, double lenght,double outDiam, boolean chmRes, int colours,boolean insulation,boolean reinforcement) {
+        super(grade, quantity, lenght, outDiam, chmRes,colours,insulation,reinforcement);
         
         
-        extraCost();
     }
-    
-    //contains the additionl cost
-    public void extraCost()
-    {
-        additionalCost = 1.00;
-        
-        if (this.chmRes) {
-           additionalCost += 0.12;
-        } 
-         
-        // this type only accept two colour
-        additionalCost += 0.17; 
-    }
-
-    
-    // return the cost of the pipe
-    @Override
-    protected double pipeCost() {
-       // System.out.println(this.volume);
-        double cost =   Math.pow(this.volume, this.costPerGrade) * additionalCost;
-        double convert = Double.parseDouble(new DecimalFormat("0.00").format(cost));
-        return convert;
-    }
-    
-    
-    // returns the pipe cost * additional cost
-    protected double totalCost2()
-    {
-        double tCost = (pipeCost()/100) * additionalCost; 
-        double finalCost = pipeCost() * tCost;
-        return finalCost;
-    }
-    
     
     // returns pipe type
     @Override
